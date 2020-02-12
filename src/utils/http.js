@@ -3,6 +3,8 @@
  */
 import axios from 'axios';
 import QS from 'qs';
+import { message } from 'element-ui';
+import store from '../store/index'
 import router from '../router/index'
 
 // 环境的切换

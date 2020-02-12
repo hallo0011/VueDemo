@@ -25,12 +25,14 @@
           </el-form-item>
           <el-form-item style="width: 100%">
             <el-button type="primary" @click.native.prevent="login" style="width: 100%">登录</el-button>
+            <el-button type="primary" @click.native.prevent="register" style="width: 100%">注册</el-button>
           </el-form-item>
         </el-form>
   </div>
 </template>
 
 <script>
+import {post} from '@/utils/http'
 import axios from 'axios'
 export default {
   data () {
@@ -45,9 +47,20 @@ export default {
               username:this.username,
               password:this.password
           }
-          axios.post('http://localhost:9527/user/login',params).then(res => {
-              console.log(res)
+          this.$store.commit('setUserName',this.username)
+          post('user/login',params).then(res => {
+              this.$store.commit('setUserToken',res) //将返回的token存储在vuex中
+              this.$router.replace('/logout')
           })
+      },
+      register(){
+        var params = {
+          username:this.username,
+          password:this.password
+        }
+        axios.post('user/register',params).then(res => {
+          console.log(res)
+        })
       }
   }
 }
