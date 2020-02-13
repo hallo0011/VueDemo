@@ -6,7 +6,9 @@ const key = 'user'
 const store = new Vuex.Store({
   state : {
     username:window.localStorage.getItem('user' || '[]') == null ?'' : JSON.parse(window.localStorage.getItem('user' || '[]')).username,
-    token:''
+    token:'',
+    rid:-1,
+    adminMenus:[]
   },
   mutations: {
     setUserName(state,username){
@@ -15,9 +17,17 @@ const store = new Vuex.Store({
     setUserToken(state,token){
       state.token = token
     },
+    setUserRole(state,role){
+      state.rid = role
+    },
+    initAdminMenu(state,menu){
+      state.adminMenus = menu
+    },
     logout(state,user){
       state.username=null,
       state.token = '',
+      state.rid = -1,
+      state.adminMenus = []
       window.localStorage.removeItem('user')
     }
   }

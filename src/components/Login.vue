@@ -49,8 +49,9 @@ export default {
           }
           this.$store.commit('setUserName',this.username)
           post('user/login',params).then(res => {
-              this.$store.commit('setUserToken',res) //将返回的token存储在vuex中
-              this.$router.replace('/logout')
+              this.$store.commit('setUserToken',res.token) //将返回的token存储在vuex中
+              this.$store.commit('setUserRole',res.rid)
+              this.$router.replace('/admin')
           })
       },
       register(){
