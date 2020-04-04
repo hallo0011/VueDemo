@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div>
-    <el-menu router default-active="/admin/dashboard" mode="vertical" :collapse="isCollapse">
+    <el-menu router default-active="/admin/dashboard" mode="vertical">
       <template v-for="(item,i) in adminMenus">
         <el-submenu :key="i" :index="i + ''" style="text-align: left">
           <span slot="title">

@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 
 
 router.beforeEach((to, from, next) => {
-  if (store.state.username && (to.name == 'adminDashboard')) {
+  if (store.state.token && (to.name == 'adminDashboard')) {
     axios.get('/user/getAuth').then(resp => {
       initAdminMenu(router, store)
     })

@@ -1,70 +1,61 @@
 <!--  -->
 <template>
   <div class="login-container">
-        <el-form
-          label-position="left"
-          label-width="0px"
-          status-icon
-        >
-          <h3 class="login_title">系统登录</h3>
-          <el-form-item prop="account">
-            <el-input
-              type="text"
-              v-model="username"
-              auto-complete="off"
-              placeholder="账号"
-            ></el-input>
-          </el-form-item>
-          <el-form-item prop="checkPass">
-            <el-input
-              type="password"
-              v-model="password"
-              auto-complete="off"
-              placeholder="密码"
-            ></el-input>
-          </el-form-item>
-          <el-form-item style="width: 100%">
-            <el-button type="primary" @click.native.prevent="login" style="width: 100%">登录</el-button>
-            <el-button type="primary" @click.native.prevent="register" style="width: 100%">注册</el-button>
-          </el-form-item>
-        </el-form>
+    <el-form label-position="left" label-width="0px" status-icon>
+      <h3 class="login_title">系统登录</h3>
+      <el-form-item prop="account">
+        <el-input type="text" v-model="username" auto-complete="off" placeholder="账号"></el-input>
+      </el-form-item>
+      <el-form-item prop="checkPass">
+        <el-input type="password" v-model="password" auto-complete="off" placeholder="密码"></el-input>
+      </el-form-item>
+      <el-form-item style="width: 100%">
+        <el-button type="primary" @click.native.prevent="login" style="width: 100%">登录</el-button>
+        <el-button type="primary" @click.native.prevent="register" style="width: 100%">注册</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script>
-import {post} from '@/utils/http'
-import axios from 'axios'
+import { get, post } from "@/utils/http";
+import axios from "axios";
 export default {
-  data () {
+  data() {
     return {
-        username:'',
-        password:''
+      username: "",
+      password: ""
     };
   },
-  methods:{
-      login(){
-          var params = {
-              username:this.username,
-              password:this.password
-          }
-          this.$store.commit('setUserName',this.username)
-          post('user/login',params).then(res => {
-              this.$store.commit('setUserToken',res.token) //将返回的token存储在vuex中
-              this.$store.commit('setUserRole',res.rid)
-              this.$router.replace('/admin')
-          })
-      },
-      register(){
-        var params = {
-          username:this.username,
-          password:this.password
-        }
-        axios.post('user/register',params).then(res => {
-          console.log(res)
-        })
-      }
+  methods: {
+    login() {
+      var params = {
+        username: this.username,
+        password: this.password
+      };
+      this.$store.commit("setUserName", this.username);
+      post("user/login", params).then(res => {
+        this.$store.commit("setUserToken", res.token); //将返回的token存储在vuex中
+        this.$store.commit("setUserRole", res.rid);
+        this.$router.replace("/admin");
+      });
+    },
+    register() {
+      var params = {
+        username: this.username,
+        password: this.password
+      };
+      axios.post("user/register", params).then(res => {
+        console.log(res);
+      });
+    },
+    alipayLogin() {
+      get("alipay/auth").then(res => {
+        window.location.href = res;
+      });
+    }
   }
-}
+};
 </script>
 <style>
 .login-container {
